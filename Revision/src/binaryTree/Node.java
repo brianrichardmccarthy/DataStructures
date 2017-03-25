@@ -1,6 +1,6 @@
 package binaryTree;
 
-public class Node<T> {
+public class Node<T extends Comparable<? super T>> {
 
     private T data;
     private Node<T> left, right;
