@@ -17,3 +17,10 @@ hs_err_pid*
 *.txt
 *.classpath
 .recommenders/*
+Lab04/src/Huffman.java
+./Lab04/*
+Lab04/*
+Lab04/src/*.java
+Lab04/*.dat
+Lab04/src/gophersCompressed.dat
+Lab04/src/Huffman.java
