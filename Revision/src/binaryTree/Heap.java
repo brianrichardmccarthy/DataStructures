@@ -67,7 +67,7 @@ public class Heap<T> {
         }
     }
     
-    public void breathFIrstSearch() {
+    public void breathFirstSearch() {
         Queue<T> queue = new Queue<>();
         int index = 0;
         queue.enqueue(items.get(index));
@@ -80,6 +80,45 @@ public class Heap<T> {
             
             index++;
         }
+    }
+    
+    public void preOrder() {
+        preOrder(items.get(0), 0);
+    }
+    
+    public void inOrder() {
+        inOrder(items.get(0), 0);
+    }
+    
+    public void postOrder() {
+        postOrder(items.get(0), 0);
+    }
+    
+    public void preOrder(T t, int index) {
+        if (t == null) return;
+        
+        System.out.println(t);
+        if (index * 2 + 1 < items.size()) preOrder(items.get(index * 2 + 1), index * 2 + 1);
+        if (index * 2 + 2 < items.size()) preOrder(items.get(index * 2 + 2), index * 2 + 2);
+        
+    }
+    
+    public void inOrder(T t, int index) {
+        if (t == null) return;
+        
+        if (index * 2 + 1 < items.size()) inOrder(items.get(index * 2 + 1), index * 2 + 1);
+        System.out.println(t);
+        if (index * 2 + 2 < items.size()) inOrder(items.get(index * 2 + 2), index * 2 + 2);
+        
+    }
+    
+    public void postOrder(T t, int index) {
+        if (t == null) return;
+        
+        if (index * 2 + 1 < items.size()) postOrder(items.get(index * 2 + 1), index * 2 + 1);
+        if (index * 2 + 2 < items.size()) postOrder(items.get(index * 2 + 2), index * 2 + 2);
+        System.out.println(t);
+        
     }
     
     

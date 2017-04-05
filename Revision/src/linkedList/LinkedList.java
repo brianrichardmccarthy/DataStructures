@@ -45,11 +45,12 @@ public class LinkedList<T extends Comparable<? super T>> {
 
         Node<T> current = node;
 
-        do {
+        while  (current != null) {
             System.out.print("Current " + current);
             System.out.println( (current.next != null) ? ("\tNext " + current.next.toString()) : "");
-        } while ( (current = current.next) != null);
-
+            current = current.next;
+        }
+        System.out.println();
     }
 
     public Node<T> find(T data) {
@@ -67,18 +68,30 @@ public class LinkedList<T extends Comparable<? super T>> {
         System.out.println("Item <" + search.data.toString() + "> was not found");
         return null;
     }
+    
+    public void reverse() {
+        
+        Node<T> prev = null, current = node, next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        } 
+        node = prev;
+        
+    }
 
     public static void main(String[] args) {
 
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
-        list.add(5);
+        list.add(2);
         list.add(3);
-        list.add(9);
-        list.add(7);
         list.add(4);
         list.display();
-        System.out.println(list.remove(4) + "\n");
+        list.reverse();
         list.display();
     }
 
