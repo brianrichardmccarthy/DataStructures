@@ -2,12 +2,47 @@
 
 public class Data {
 
-    private String name, year;
-    private char gender;
+    private String name;
+    private Integer year;
+    private String parentOne;
+    private String parentTwo;
+    private Character gender;
     
-    public Data(String name, String year, char gender) {
-        this.name = name;
-        this.year = year;
+    public Data(String name, char gender, Integer year, String parentOne, String parentTwo) {
+        setName(name);
+        setGender(gender);
+        setYear(year);
+        setParentOne(parentOne);
+        setParentTwo(parentTwo);
+    }
+
+    
+    public String getParentOne() {
+    
+        return parentOne;
+    }
+
+    
+    public void setParentOne(String parentOne) {
+    
+        this.parentOne = parentOne;
+    }
+
+    
+    public String getParentTwo() {
+    
+        return parentTwo;
+    }
+
+    
+    public void setParentTwo(String parentTwo) {
+    
+        this.parentTwo = parentTwo;
+    }
+
+    
+    public void setGender(Character gender) {
+    
         this.gender = gender;
     }
 
@@ -23,13 +58,13 @@ public class Data {
     }
 
     
-    public String getYear() {
+    public Integer getYear() {
     
         return year;
     }
 
     
-    public void setYear(String year) {
+    public void setYear(Integer year) {
     
         this.year = year;
     }
@@ -46,6 +81,6 @@ public class Data {
     }
     
     public String toString() {
-        return "Name <" + name + ">\tYear <" + year + ">\tGender <" + gender + ">";
+        return "Name <" + name + ">\tYear <" + year + ">\tGender <" + gender + ">\tParent <" + parentOne + ">\tParent<" + parentTwo +">\n";
     }
 }
