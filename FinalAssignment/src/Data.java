@@ -81,6 +81,6 @@ public class Data {
     }
     
     public String toString() {
-        return "Name <" + name + ">\tYear <" + year + ">\tGender <" + gender + ">\tParent <" + parentOne + ">\tParent<" + parentTwo +">\n";
+        return "Name <" + name + ">\tYear <" + year + ">\tGender <" + gender + ">\tParent <" + parentOne + ">\tParent<" + parentTwo +">";
     }
 }

@@ -60,7 +60,7 @@ public class FileIO {
                 int result = 0;
                 for (Node node : roots) {
                     int numOfParents = (((data.getParentOne().equals("?"))) ? 0 : 1) + (((data.getParentTwo().equals("?"))) ? 0 : 1);
-                    result += node.addChild(data);
+                    result += Node.addChild(data, node);
                     if (result == numOfParents) {
                         result = 0;
                         break;
@@ -71,8 +71,9 @@ public class FileIO {
         
         for (Node node : roots) {
             node.print(node, "");
+            System.out.println();
         }
-
+        
         return roots;
     }
     
