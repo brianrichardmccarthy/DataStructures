@@ -2,87 +2,68 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.TreeSet;
 
 public class FileIO {
 
-    public final static FileIO fileIO = new FileIO();
+    public static final FileIO instance = new FileIO();
 
     private FileIO() {
-
     }
 
-    /**
-     * 
-     * http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java 
-     * 
-     * @param filePath
-     * @return
-     * @throws IOException
-     */
-    public ArrayList<Node> read(String filePath) throws IOException {
+    public void read(String filePath) {
 
-        HashMap<Integer, ArrayList<Data>> elements = new HashMap<>();
         
-        BufferedReader file = new BufferedReader(new FileReader(new File(filePath)));
-        
-        String lines;
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(new File(filePath)));
+            TreeSet<String> unsetParent = new TreeSet<>();
+            String lines;
+            while ( (lines = file.readLine()) != null) {
+                String[] split = lines.split("\\s+");
+                if (split.length != 5) throw new Exception(
+                    "Line should have the format\n\t<Name>_<Gender>_<Year>_<Parent Name>_<Parent Name>\nwhere _ is space\nInstead recieved line <" + lines + ">");
 
-        while ((lines = file.readLine()) != null) {
-            String[] element = lines.split("\\s+");
-            
-            Integer key = Integer.parseInt(element[2]);
-            
-            if (elements.containsKey(key)) elements.get(key).add(new Data(element[0], element[1].charAt(0), key, element[3], element[4]));
-            else {
-                elements.put(key, new ArrayList<>());
-                elements.get(key).add(new Data(element[0], element[1].charAt(0), key, element[3], element[4]));
-            }
-            
-        }
-        
-        file.close();
+                Node.addPerson(new Node(split[0], split[1].charAt(0), Integer.parseInt(split[2]), split[3], split[4]));
 
-        ArrayList<Integer> keys = new ArrayList<>(elements.keySet());
-        
-        Collections.sort(keys);
-
-        ArrayList<Node> roots = new ArrayList<>();
-        
-        for (Integer key : keys) {
-            for (Data data : elements.get(key)) {
-                if (data.getParentOne().equals("?") && data.getParentTwo().equals("?")) {
-                    roots.add(new Node(data));
-                    continue;
+                if (!split[3].equals("?")) {
+                    if (Node.isPerson(split[3])) Node.getPerson(split[3]).addChild(split[0]);
+                    else unsetParent.add(split[0]);
                 }
-                int result = 0;
-                for (Node node : roots) {
-                    int numOfParents = (((data.getParentOne().equals("?"))) ? 0 : 1) + (((data.getParentTwo().equals("?"))) ? 0 : 1);
-                    result += Node.addChild(data, node);
-                    if (result == numOfParents) {
-                        result = 0;
-                        break;
-                    }
+
+                if (!split[4].equals("?")) {
+                    if (Node.isPerson(split[4])) Node.getPerson(split[4]).addChild(split[0]);
+                    else unsetParent.add(split[0]);
                 }
             }
+
+            file.close();
+            
+            for (String child : unsetParent) {
+                Node childNode = Node.getPerson(child);
+
+                if (!childNode.getParentOneName().equals("?")) Node.getPerson(childNode.getParentOneName()).addChild(
+                    child);
+
+                if (!childNode.getParentTwoName().equals("?")) Node.getPerson(childNode.getParentTwoName()).addChild(
+                    child);
+
+            }
+
+            TreeSet<Node> siblings = Node.getSiblings("Desmond");
+            
+            for (Node node : siblings) {
+                System.out.println(node);
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
-        for (Node node : roots) {
-            node.print(node, "");
-            System.out.println();
-        }
-        
-        return roots;
+    }
+
+    public static void main(String[] args) {
+        instance.read("./src/small.txt");
     }
     
-    public static void main(String[] args) {
-        try {
-            fileIO.read("./src/small.txt");
-        } catch (Exception e) {
-            System.out.println("You done GOOFED");
-        }
-    }
-
 }
