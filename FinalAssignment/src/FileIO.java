@@ -4,29 +4,32 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.TreeSet;
 
+/**
+ * 
+ * @author Brian
+ *
+ */
 public class FileIO {
 
     public static final FileIO instance = new FileIO();
 
     /**
-     * 
+     * Private constructor for singleton
      */
     private FileIO() {
     }
 
-    public void write(String fileNameAndPath) {
-        
-    }
-    
     /**
-     * 
+     * Reads in the given file.
+     * Expectes the file to have the format "Colby M 1600 ? ?" on each line else a Exception is thrown
      * @param filePath
      */
     public void read(String filePath) {
 
-        
         try {
             BufferedReader file = new BufferedReader(new FileReader(new File(filePath)));
+            
+            // track unlinked parents
             TreeSet<String> unsetParent = new TreeSet<>();
             String lines;
             while ( (lines = file.readLine()) != null) {
@@ -39,6 +42,14 @@ public class FileIO {
 
                 Node.addPerson(new Node(split[0], split[1].charAt(0), Integer.parseInt(split[2]), split[3], split[4]));
 
+                /*
+                 * try to link parent to child now by
+                 * first checking parent one is known
+                 *      if yes then
+                 *          if the parent is in the Node hash map link it with new node by adding its' child (current line/ Node)
+                 *          else store it in the TreeSet
+                 * repeat for parent 2
+                 */
                 if (!split[3].equals("?")) {
                     if (Node.isPerson(split[3])) Node.getPerson(split[3]).addChild(split[0]);
                     else unsetParent.add(split[0]);
@@ -52,6 +63,13 @@ public class FileIO {
 
             file.close();
             
+            /*
+             * Loop through all child names that were added before their parents
+             * Get the child node node.
+             * check that parent 1 is known
+             *      if yes add child name to parent node
+             * repeat for parent two
+             */
             for (String child : unsetParent) {
                 Node childNode = Node.getPerson(child);
 
@@ -63,8 +81,6 @@ public class FileIO {
 
             }
 
-            System.out.println(Node.getSiblings("Mariam"));
-            
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -72,8 +88,5 @@ public class FileIO {
         }
     }
 
-    public static void main(String[] args) {
-        instance.read("./src/small.txt");
-    }
     
 }

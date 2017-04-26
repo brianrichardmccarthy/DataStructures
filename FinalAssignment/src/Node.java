@@ -3,15 +3,30 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 /**
- * 
- * @author Brian
+ * Contains instance data for each person
+ *      Including (
+ *       their name,
+ *       their gender,
+ *       their year of birth,
+ *       both parents names,
+ *       up to three children names,
+ *       family index
+ *      )
+ * Plus static Hashmap of all people with their names used as keys, (Thus has the effect that the names must be unique)
+ * @author Brian (unless referenced)
  *
  */
 public class Node implements Comparable<Node> {
 
+    /**
+     * Class data
+     */
     private static HashMap<String, Node> nodes = new HashMap<>();
     private static HashMap<String, Integer> families = new HashMap<>();
 
+    /**
+     * Intsance data
+     */
     private String name;
     private String leftChildName;
     private String rightChildName;
@@ -23,15 +38,16 @@ public class Node implements Comparable<Node> {
     private int familyIndex;
 
     /**
+     * Constructor - Parameters match that given in the file "large-database.txt"
      * 
-     * @param thisName
-     * @param gender
-     * @param year
-     * @param parentOne
-     * @param parentTwo
+     * @param name String
+     * @param gender Character
+     * @param year Integer
+     * @param parentOne String
+     * @param parentTwo String
      */
-    public Node(String thisName, Character gender, Integer year, String parentOne, String parentTwo) {
-        setName(thisName);
+    public Node(String name, Character gender, Integer year, String parentOne, String parentTwo) {
+        setName(name);
         setGender(gender);
         setYearOfBirth(year);
         setParentOneName(parentOne);
@@ -39,8 +55,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for name
+     * @return String
      */
     public String getName() {
 
@@ -48,8 +64,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for left child name
+     * @return String
      */
     public String getLeftChildName() {
 
@@ -57,8 +73,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for right child
+     * @return String
      */
     public String getRightChildName() {
 
@@ -66,8 +82,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for middle
+     * @return String
      */
     public String getMiddleChildName() {
 
@@ -75,8 +91,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for parent one name
+     * @return String
      */
     public String getParentOneName() {
 
@@ -84,8 +100,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for parent two name
+     * @return String
      */
     public String getParentTwoName() {
 
@@ -93,8 +109,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor of year of birth
+     * @return Integer
      */
     public Integer getYearOfBirth() {
 
@@ -102,8 +118,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for gender
+     * @return Character
      */
     public Character getGender() {
 
@@ -111,8 +127,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Accessor for family index
+     * @return int
      */
     public int getFamilyIndex() {
 
@@ -120,8 +136,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param familyIndex
+     * Mutator for family Index
+     * @param familyIndex int
      */
     public void setFamilyIndex(int familyIndex) {
 
@@ -129,8 +145,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param name
+     * Mutator for name
+     * @param name String
      */
     public void setName(String name) {
 
@@ -138,8 +154,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param leftChildName
+     * Mutator for name
+     * @param leftChildName String
      */
     public void setLeftChildName(String leftChildName) {
 
@@ -147,8 +163,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param rightChildName
+     * Mutator for right child name
+     * @param rightChildName String
      */
     public void setRightChildName(String rightChildName) {
 
@@ -156,8 +172,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param middleChildName
+     * Mutator for middle child name
+     * @param middleChildName String
      */
     public void setMiddleChildName(String middleChildName) {
 
@@ -165,8 +181,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param parentOneName
+     * Mutator parent one name
+     * @param parentOneName String
      */
     public void setParentOneName(String parentOneName) {
 
@@ -174,8 +190,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param parentTwoName
+     * Mutator for parent two name
+     * @param parentTwoName String
      */
     public void setParentTwoName(String parentTwoName) {
 
@@ -183,8 +199,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param yearOfBirth
+     * Mutator for year of birth
+     * @param yearOfBirth Integer
      */
     public void setYearOfBirth(Integer yearOfBirth) {
 
@@ -192,8 +208,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param gender
+     * Mutator for gender
+     * @param gender Character
      */
     public void setGender(Character gender) {
 
@@ -201,8 +217,11 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param child
+     * Mutator for all children. 
+     * Checks if left is null then adds given child name to that, 
+     * else if middle is mull add given child name to that, 
+     * else add given name child to right child
+     * @param child String
      */
     public void addChild(String child) {
 
@@ -212,7 +231,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
+     * String representing this instances' data
+     * @return String
      */
     @Override
     public String toString() {
@@ -221,8 +241,8 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param person
+     * (Static) Method to add person to the hashmap of nodes
+     * @param person Node
      */
     public static void addPerson(Node person) {
 
@@ -230,9 +250,9 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param name
-     * @return
+     * (Static) Gets the Node object of the given name
+     * @param name String
+     * @return Node
      */
     public static Node getPerson(String name) {
 
@@ -240,9 +260,9 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param name
-     * @return
+     * Checks if the given name is in the hashmap
+     * @param name String
+     * @return boolean
      */
     public static boolean isPerson(String name) {
 
@@ -250,8 +270,9 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @return
+     * Counts the number of family Nodes not connected to each other. 
+     * Returns the number of family trees.
+     * @return int
      */
     public static int numberOfFamilies() {
 
@@ -268,17 +289,20 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param name
-     * @param familyIndex
+     * Sets the node object with the key names' family id to the given int value
+     * @param name String
+     * @param familyIndex int
      */
     private static void setFamily(String name, int familyIndex) {
 
+        // prevent stackoverflow by returning if name is null or name is in families hash map or nodes does not contain the name
         if (name == null || families.containsKey(name) || !nodes.containsKey(name)) return;
 
+        // add the name to the families hash map and update the nodes family index
         families.put(name, familyIndex);
         nodes.get(name).setFamilyIndex(familyIndex);
 
+        // recursive search the two parent's and three children (only if they're not null)
         if (nodes.get(name).parentOneName != null) setFamily(nodes.get(name).parentOneName, familyIndex);
         if (nodes.get(name).parentTwoName != null) setFamily(nodes.get(name).parentTwoName, familyIndex);
         if (nodes.get(name).leftChildName != null) setFamily(nodes.get(name).leftChildName, familyIndex);
@@ -287,45 +311,54 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
+     * Gets the siblings of the given name
      * @param name
      * @return
      */
     public static TreeSet<Node> getSiblings(String name) {
 
+        // sibling tree set to be return
         TreeSet<Node> siblings = new TreeSet<>();
 
-        Node parentOne = nodes.get(nodes.get(name).parentOneName);
-        Node parentTwo = nodes.get(nodes.get(name).parentTwoName);
-
-        if (parentOne != null) {
-            if (parentOne.leftChildName != null && !parentOne.leftChildName.equals(name)) siblings.add(nodes.get(parentOne.leftChildName));
-            if (parentOne.middleChildName != null && !parentOne.middleChildName.equals(name)) siblings.add(nodes.get(parentOne.middleChildName));
-            if (parentOne.rightChildName != null && !parentOne.rightChildName.equals(name)) siblings.add(nodes.get(parentOne.rightChildName));
+        // Get node of parent one
+        Node parent = nodes.get(nodes.get(name).parentOneName);
+        
+        // if parent one exits
+        if (parent != null) {
+            // check left, middle, and right aren't null and don't match given name
+            if (parent.leftChildName != null && !parent.leftChildName.equals(name)) siblings.add(nodes.get(parent.leftChildName));
+            if (parent.middleChildName != null && !parent.middleChildName.equals(name)) siblings.add(nodes.get(parent.middleChildName));
+            if (parent.rightChildName != null && !parent.rightChildName.equals(name)) siblings.add(nodes.get(parent.rightChildName));
         }
         
-        if (parentTwo != null) {
-            if (parentTwo.leftChildName != null && !parentTwo.leftChildName.equals(name)) siblings.add(nodes.get(parentTwo.leftChildName));
-            if (parentTwo.middleChildName != null && !parentTwo.middleChildName.equals(name)) siblings.add(nodes.get(parentTwo.middleChildName));
-            if (parentTwo.rightChildName != null && !parentTwo.rightChildName.equals(name)) siblings.add(nodes.get(parentTwo.rightChildName));
+        // Get node of parent two
+        parent = nodes.get(nodes.get(name).parentTwoName);
+        
+        // if parent two exits
+        if (parent != null) {
+            // check left, middle, and right aren't null and don't match given name
+            if (parent.leftChildName != null && !parent.leftChildName.equals(name)) siblings.add(nodes.get(parent.leftChildName));
+            if (parent.middleChildName != null && !parent.middleChildName.equals(name)) siblings.add(nodes.get(parent.middleChildName));
+            if (parent.rightChildName != null && !parent.rightChildName.equals(name)) siblings.add(nodes.get(parent.rightChildName));
         }
         
         return siblings;
     }
 
     /**
-     * 
-     * @param name
-     * @return
+     * Get the size of the family of the given family member
+     * @param name String
+     * @return int
      */
     public static int getFamilySize(String name) {
         return getFamilySize(root(nodes.get(name)));
     }
 
     /**
-     * 
-     * @param root
-     * @return
+     * Recursively search given nodes children and keep adding 1 for every child that exist
+     * Assumes given node is the root node
+     * @param root Node
+     * @return int
      */
     private static int getFamilySize(Node root) {
         if (root == null) return 0;
@@ -333,30 +366,47 @@ public class Node implements Comparable<Node> {
     }
     
     /**
-     * 
-     * @param name
-     * @return
+     * Using level order traversal get all the family members of the given string starting at the root node
+     * @param name String
+     * @return TreeSet<Node>
      */
     public static TreeSet<Node> getFamily(String name) {
 
+        // get root node
         Node root = root(nodes.get(name));
+        
+        // treeset to be returned, arraylist to be used as queue
         TreeSet<Node> family = new TreeSet<>();
-
         ArrayList<Node> queue = new ArrayList<>();
-        family.add(root);
+        
+        // add root node to queue
         queue.add(root);
 
+        // while queue has nodes
         while (!queue.isEmpty()) {
-            Node front = queue.remove(0);
-            family.add(front);
+            
+            // remove front node
+            root = queue.remove(0);
+            
+            // add to family arraylist
+            family.add(root);
 
-            Node child = nodes.get(front.leftChildName);
+            // get the left child
+            Node child = nodes.get(root.leftChildName);
+            
+            // if left child exists and is known add to the queue
             if (child != null && !child.name.equals("?")) queue.add(child);
 
-            child = nodes.get(front.middleChildName);
+            // get the left child
+            child = nodes.get(root.middleChildName);
+            
+            // if left child exists and is known add to the queue
             if (child != null && !child.name.equals("?")) queue.add(child);
 
-            child = nodes.get(front.rightChildName);
+            // get the left child
+            child = nodes.get(root.rightChildName);
+            
+            // if left child exists and is known add to the queue
             if (child != null && !child.name.equals("?")) queue.add(child);
         }
 
@@ -364,27 +414,34 @@ public class Node implements Comparable<Node> {
     }
 
     /**
-     * 
-     * @param node
-     * @return
+     * Recursively move up the given nodes' parents until a node with both parents are unknown are found and return that node
+     * @param node Node
+     * @return Node
      */
     private static Node root(Node node) {
 
+        // prevents stackoverflow
         if (node == null) return new Node("NULL", 'N', 0, "", "");
 
+        // found root node
         if (node.parentOneName.equals("?") && node.parentTwoName.equals("?")) return node;
 
-        Node left = root(nodes.get(node.parentOneName));
+        // get first parent
+        Node parent = root(nodes.get(node.parentOneName));
 
-        if (!left.name.equals("NULL")) return left;
+        // check if the root node has been found in recursive call, if yes return it
+        if (!parent.name.equals("NULL")) return parent;
 
-        if (left.name.equals("NULL")) return root(nodes.get(node.parentTwoName));
+        // check if the root node has not been found in first parent side
+        // then check parent two side of family
+        if (parent.name.equals("NULL")) return root(nodes.get(node.parentTwoName));
 
+        // return node not found
         return new Node("NULL", 'N', 0, "", "");
     }
 
     /**
-     * 
+     * Prints all the nodes in random order
      */
     public static void printAll() {
 
@@ -394,17 +451,22 @@ public class Node implements Comparable<Node> {
 
     /**
      * 
-     * @param personOne
-     * @param personTwo
-     * @return
+     * Returns true if the family index matches the both given people
+     * 
+     * @param personOne String
+     * @param personTwo String
+     * @return boolean
      */
-    public boolean isRelated(String personOne, String personTwo) {
+    public static boolean isRelated(String personOne, String personTwo) {
         numberOfFamilies();
         return nodes.get(personOne).familyIndex == nodes.get(personTwo).familyIndex;
     }
     
     /**
-     *
+     * Compares this nodes' name to other nodes' name
+     * 
+     * @param Node
+     * @return int
      */
     @Override
     public int compareTo(Node that) {
