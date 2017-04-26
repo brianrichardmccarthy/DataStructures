@@ -8,9 +8,20 @@ public class FileIO {
 
     public static final FileIO instance = new FileIO();
 
+    /**
+     * 
+     */
     private FileIO() {
     }
 
+    public void write(String fileNameAndPath) {
+        
+    }
+    
+    /**
+     * 
+     * @param filePath
+     */
     public void read(String filePath) {
 
         
@@ -20,8 +31,11 @@ public class FileIO {
             String lines;
             while ( (lines = file.readLine()) != null) {
                 String[] split = lines.split("\\s+");
-                if (split.length != 5) throw new Exception(
-                    "Line should have the format\n\t<Name>_<Gender>_<Year>_<Parent Name>_<Parent Name>\nwhere _ is space\nInstead recieved line <" + lines + ">");
+                if (split.length != 5) {
+                    file.close();
+                    throw new Exception(
+                        "Line should have the format\n\t<Name>_<Gender>_<Year>_<Parent Name>_<Parent Name>\nwhere _ is space\nInstead recieved line <" + lines + ">");
+                }
 
                 Node.addPerson(new Node(split[0], split[1].charAt(0), Integer.parseInt(split[2]), split[3], split[4]));
 
@@ -49,11 +63,7 @@ public class FileIO {
 
             }
 
-            TreeSet<Node> siblings = Node.getSiblings("Desmond");
-            
-            for (Node node : siblings) {
-                System.out.println(node);
-            }
+            System.out.println(Node.getSiblings("Mariam"));
             
         } catch (IOException e) {
             e.printStackTrace();
